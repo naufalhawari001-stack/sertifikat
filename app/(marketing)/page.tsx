@@ -44,22 +44,17 @@ export default async function Home() {
     <main className="min-h-screen font-sans bg-white">
       
       {/* 1. HERO SECTION */}
-      <section className="relative h-[480px] md:h-[600px] flex items-center overflow-hidden bg-[#222244]">
-        <ScrollAnimationWrapper className="absolute inset-0 z-0 w-full h-full animate-fade-in">
-           <Image src="/neo.jpeg" alt="Hero Background" fill className="object-cover object-[75%_center] md:object-right" priority />
+      <section className="w-full bg-white">
+        <ScrollAnimationWrapper className="w-full animate-fade-in flex justify-center">
+           <Image 
+             src="/neo.png" 
+             alt="Banner Promo" 
+             width={1920} 
+             height={800} 
+             className="w-full h-auto object-contain" 
+             priority 
+           />
         </ScrollAnimationWrapper>
-        <div className="absolute inset-0 bg-[#222244] opacity-40 z-10 md:hidden" style={{ clipPath: 'polygon(0 0, 75% 0, 45% 100%, 0% 100%)' }}></div>
-        <div className="absolute inset-0 bg-[#222244] opacity-95 z-10 hidden md:block" style={{ clipPath: 'polygon(0 0, 60% 0, 40% 100%, 0% 100%)' }}></div>
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full h-full flex items-center pt-8 md:pt-0">
-          <div className="w-[65%] md:max-w-2xl text-white animate-fade-in-left">
-            <p className="text-xs md:text-xl font-bold tracking-[0.15em] uppercase text-gray-300 mb-3 md:mb-4">BUAT PILIHAN TERBAIK</p>
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-xl">
-              <span className="block">Kami Adalah</span>
-              <span className="block">Yang Terbaik</span>
-              <span className="block">Saat Ini</span>
-            </h1>
-          </div>
-        </div>
       </section>
       
       {/* 2. FEATURES */}
