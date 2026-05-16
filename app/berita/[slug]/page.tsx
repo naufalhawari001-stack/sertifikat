@@ -4,9 +4,58 @@ import { notFound } from 'next/navigation';
 import { getPostBySlug, getPosts } from '~/lib/sanity.client';
 import { PortableText } from '@portabletext/react';
 import { FaSearch, FaFolder, FaCalendarAlt } from 'react-icons/fa';
+import type { Metadata, ResolvingMetadata } from 'next'; // <--- IMPORT TYPE METADATA
 
 export const revalidate = 10;
 
+// --- FUNGSI GENERATE METADATA (UNTUK PREVIEW WA & SEO) ---
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // Ambil data postingan berdasarkan slug
+  const post = await getPostBySlug(params.slug);
+
+  // Jika post tidak ada, kembalikan metadata default
+  if (!post) {
+    return {
+      title: 'Berita Tidak Ditemukan | Solusi Sertifikat',
+    }
+  }
+
+  // Gunakan URL absolut untuk gambar. Jika postingan tidak ada gambar, pakai og-image.jpg default
+  const imageUrl = post.image ? post.image : 'https://solusi-sertifikat.com/og-image.jpg';
+  const postUrl = `https://solusi-sertifikat.com/berita/${params.slug}`;
+
+  return {
+    title: `${post.title} | Solusi Sertifikasi Sulteng`,
+    description: post.excerpt || `Membaca berita ${post.title} selengkapnya di Solusi Sertifikat.`,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || `Baca selengkapnya tentang ${post.title}`,
+      url: postUrl,
+      siteName: "Solusi Sertifikat",
+      images: [
+        {
+          url: imageUrl, // Menampilkan gambar khusus untuk berita ini
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+      locale: "id_ID",
+      type: "article", // Gunakan tipe 'article' untuk postingan blog/berita
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt || `Baca selengkapnya tentang ${post.title}`,
+      images: [imageUrl],
+    },
+  }
+}
+
+// --- KOMPONEN UTAMA HALAMAN ---
 export default async function BeritaDetail({ params }: { params: { slug: string } }) {
   const post = await getPostBySlug(params.slug);
   // Fetch recent posts for the sidebar
@@ -29,9 +78,9 @@ export default async function BeritaDetail({ params }: { params: { slug: string 
                 <span className="font-bold">Anda di sini:</span>
                 <Link href="/" className="hover:text-[#4ade80] transition">Beranda</Link>
                 <span>/</span>
-                <span className="text-[#4ade80]">Berita</span>
+                <Link href="/berita" className="hover:text-[#4ade80] transition">Berita</Link>
                 <span>/</span>
-                <span>{post.title}</span>
+                <span className="text-gray-300 line-clamp-1">{post.title}</span>
             </div>
         </div>
       </div>

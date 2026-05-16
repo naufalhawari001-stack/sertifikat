@@ -24,19 +24,20 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-// Metadata Website Global
+// Metadata Website Global & Open Graph (KTP Digital untuk WhatsApp/Sosmed)
 export const metadata = {
   title: {
     default: "Solusi Sertifikat | Solusi Sertifikasi Sulteng",
     template: `%s | Solusi Sertifikasi Sulteng`,
   },
-  metadataBase: new URL(siteConfig.url),
+  // Pastikan metadataBase menggunakan domain lengkap
+  metadataBase: new URL("https://solusi-sertifikat.com"),
   description: "Jasa pembuatan legalitas perusahaan terpercaya dan sertifikasi di Sulawesi Tengah.",
   keywords: ["Next.js", "React", "Legalitas", "Workshop", "Sertifikasi", "Sulteng"],
   authors: [
     {
       name: "Solusi Sertifikasi Sulteng",
-      url: siteConfig.url,
+      url: "https://solusi-sertifikat.com",
     },
   ],
   creator: "Solusi Sertifikasi Sulteng",
@@ -44,6 +45,33 @@ export const metadata = {
     icon: "/favicon.svg",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
+  },
+  
+  // --- OPEN GRAPH: INI YANG DIBACA OLEH WHATSAPP & FACEBOOK ---
+  openGraph: {
+    title: "Solusi Sertifikat | Solusi Sertifikasi Sulteng",
+    description: "Jasa pembuatan legalitas perusahaan terpercaya dan sertifikasi di Sulawesi Tengah.",
+    url: "https://solusi-sertifikat.com",
+    siteName: "Solusi Sertifikat",
+    images: [
+      {
+        // WAJIB FULL URL SEPERTI INI, TIDAK BOLEH HANYA "/og-image.jpg"
+        url: "https://solusi-sertifikat.com/og-image.jpg", 
+        width: 1200,
+        height: 630,
+        alt: "Preview Website Solusi Sertifikasi Sulteng",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+
+  // --- TWITTER CARD: BACKUP JIKA WHATSAPP GAGAL BACA OPEN GRAPH ---
+  twitter: {
+    card: "summary_large_image",
+    title: "Solusi Sertifikat | Solusi Sertifikasi Sulteng",
+    description: "Jasa pembuatan legalitas perusahaan terpercaya dan sertifikasi di Sulawesi Tengah.",
+    images: ["https://solusi-sertifikat.com/og-image.jpg"],
   },
 }
 
