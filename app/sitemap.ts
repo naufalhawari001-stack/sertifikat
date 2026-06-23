@@ -1,14 +1,11 @@
 import { type MetadataRoute } from "next"
-
 import { getMainPagesSlugs, getSecondaryPagesSlugs } from "~/lib/sanity.client"
 
-const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : "http://localhost:3000"
+// --- UBAH DI SINI: Kita "Kunci" langsung ke domain asli Anda ---
+// Supaya Google Search Console tidak bingung lagi dengan URL Vercel
+const baseUrl = "https://www.solusi-sertifikat.com"
 
-export default async function sitemap(): Promise<
-  Promise<Promise<MetadataRoute.Sitemap>>
-> {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routesMap = [""].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
